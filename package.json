@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "csv": "0.3.*",
     "express": "~4.0.0",
     "static-favicon": "~1.0.0",
     "morgan": "~1.0.0",
