@@ -8,6 +8,6 @@ Work out the furthest possible distance you can travel for a given budget
 - Sort by distance
 - Implement binary search to find best destination
 - Integrate into express app
-- Use wego api (or other) to fetch prices http://www.wego.com/api/flights/docs#api_startSearch
+- Use rome2reo api (or other) to fetch prices
 - Get binary search working for prices
 - Make it look sexy
