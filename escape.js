@@ -1,9 +1,10 @@
 var fs = require('fs')
-  , readline = require('readline') 
+  , readline = require('readline')
 
 var airports = {}
-  , origin = 'SFO'
-  , dest = 'VPN'
+  , origin
+  , dest
+  // , test = require('./test.json')
 
 var rd = readline.createInterface({
   input: fs.createReadStream(__dirname + '/airports.csv')
@@ -21,25 +22,54 @@ rd.on('line', function(line){
     , country: data[3]
     , lat: data[6]
     , lon: data[7]
-    }  
-  } 
+    }
+  }
 })
 
 rd.on('close', function(){
+  origin = airports['SFO']
+  dest = airports['VPN']
   console.log(Object.keys(airports).length, 'airports')
-  console.log('Distance between', origin, 'and', dest + ':')
-  console.log(calcDist(airports[origin].lat, airports[origin].lon, airports[dest].lat, airports[dest].lon ) + ' kms')
+  console.log('Distance between', origin.name, 'and', dest.name + ':')
+  console.log(calcDist(origin, dest) + ' kms')
+
+  fs.writeFile('test.json', JSON.stringify(airports, null, 2), function(err) {
+    if (err) throw err
+    console.log('Saved!!!')
+  })
+  // allDist(origin, function(x){
+  //   console.log(x)
+  // })
 })
 
 
-function calcDist(lat1, lon1, lat2, lon2){
+function calcDist(origin, dest){
   // Use Spherical Law of Cosines to calculate distance
-  var l1 = parseFloat(lat1) * Math.PI / 180
+
+  var lat1 = origin.lat
+    , lon1 = origin.lon
+    , lat2 = dest.lat
+    , lon2 = dest.lon
+    , l1 = parseFloat(lat1) * Math.PI / 180
     , l2 = parseFloat(lat2) * Math.PI / 180
     , delta = (parseFloat(lon2) - parseFloat(lon1)) * Math.PI / 180
     , R = 6371
-    , d =  Math.acos( Math.sin(l1)*Math.sin(l2) + Math.cos(l1)*Math.cos(l2) * Math.cos(delta) ) * R 
+    , d =  Math.acos( Math.sin(l1)*Math.sin(l2) + Math.cos(l1)*Math.cos(l2) * Math.cos(delta) ) * R
 
   return d.toFixed() // kms
 }
 
+function allDist(origin, next) {
+  var dists = []
+    , dist
+  for (var dest in airports) {
+    dist = calcDist(origin, airports[dest])
+    dists.push([dest, dist])
+  }
+
+  dists = dists.sort(function(a,b) {
+    return a[1] > b[1]
+  })
+
+  return next(dists)
+}
