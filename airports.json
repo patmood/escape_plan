@@ -24254,12 +24254,12 @@
     "lat": "-15.9767",
     "lon": "-173.755"
   },
-  "Tonga": {
+  "NFO": {
     "name": "Mata'aho Airport",
     "city": "Angaha",
     "country": " Niuafo'ou Island",
-    "lat": "NFTO",
-    "lon": "-15.5708"
+    "lat": "-15.5708",
+    "lon": "-175.633"
   },
   "HPA": {
     "name": "Lifuka Island Airport",
@@ -25682,12 +25682,12 @@
     "lat": "5.78287",
     "lon": "36.562"
   },
-  "Cape Verde": {
+  "RAI": {
     "name": "Praia International Airport",
     "city": "Praia",
-    "country": " Santiago Island",
-    "lat": "GVNP",
-    "lon": "14.9245"
+    "country": "Cape Verde",
+    "lat": "14.9245",
+    "lon": "-23.4935"
   },
   "NDR": {
     "name": "El Aroui Airport",
@@ -26452,12 +26452,12 @@
     "lat": "55.4372",
     "lon": "-5.68639"
   },
-  "United Kingdom": {
+  "DSA": {
     "name": "Robin Hood Doncaster Sheffield Airport",
     "city": "Doncaster",
-    "country": " Sheffield",
-    "lat": "EGCN",
-    "lon": "53.474722"
+    "country": " United Kingdom",
+    "lat": "53.474722",
+    "lon": "-1.004444"
   },
   "NQT": {
     "name": "Nottingham Airport",
