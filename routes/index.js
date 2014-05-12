@@ -6,10 +6,10 @@ var router = express.Router()
   , apiKey
 
 // Env variables not working locally for me in fish shell
-if (process.env.NODE_ENV === 'PRODUCTION') {
-  apiKey = process.env.ROME2RIO
-} else {
+if (app.get('env') === 'development') {
   apiKey = require('../keys').rome2rio
+} else {
+  apiKey = process.env.ROME2RIO
 }
 
 /* GET home page. */
