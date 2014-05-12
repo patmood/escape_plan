@@ -2,7 +2,8 @@ var express = require('express')
 var router = express.Router()
   , airports = require('../airports')
   , distance = require('../lib/distance')
-  , getTrip = require('../lib/rome2rio')
+  , rome2rio = require('../lib/rome2rio')
+  , apiKey = require('../keys').rome2rio // process.env.ROME2RIO
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -11,40 +12,59 @@ router.get('/', function(req, res) {
 
 router.get('/origin', function(req, res) {
   console.log(req.query)
-  var origin = req.query.origin.toUpperCase()
-    , destLat = airports[origin].lat * -1
-    , destLon = airports[origin].lon * -1
-    // , destPos = '-49.037868,-7.031250' // Middle of ocean
-    , destPos = destLat.toString() + ',' + destLon.toString()
+  var origin = encodeURIComponent(req.query.origin)
 
-  console.log(destPos)
+  // Get the starting place
+  rome2rio.autocomplete(origin, function(err, suggestions){
+    if (err) return res.send('This error occured:' + err)
+    console.log(suggestions)
 
-  getTrip(origin, destPos, function(err, trip){
-    if (err) throw err
-    if (trip.routes.length > 0) {
-      console.log('SENDING furthest location')
-      res.send(trip)
-    } else {
-      distance.furthestAirport(airports, origin, function(furthest) {
-        destPos = furthest.lat.toString() + ',' + furthest.lon.toString()
-        getTrip(origin, destPos, function(err, trip) {
-          if (err) throw err
-          console.log('SENDING furthest airport')
-          res.send(trip)
-        })
-
-      })
+    // No starting place found? Booooo
+    if (suggestions.places.length == 0) {
+      return res.send('Origin counld not be found')
     }
+
+    var startPlace = suggestions.places[0]
+      , destLat = startPlace.lat * -1
+      , destLon = startPlace.lng * -1
+      , destPos = destLat.toString() + ',' + destLon.toString()
+      // , destPos = '-49.037868,-7.031250' // Middle of ocean
+
+    // Find routes for furthest location
+    rome2rio.routes(startPlace.canonicalName, destPos, function(err, trip){
+      if (err) throw err
+      if (trip.routes.length > 0) {
+        console.log('SENDING furthest location')
+        res.send(trip)
+      } else {
+        // If no routes found, look for routes to furthest airport
+        distance.furthestAirport(airports, origin, function(furthest) {
+          destPos = furthest.lat.toString() + ',' + furthest.lon.toString()
+          rome2rio.routes(origin, destPos, function(err, trip) {
+            if (err) throw err
+            console.log('SENDING furthest airport')
+            res.send(trip)
+          })
+
+        })
+      }
+    })
   })
+
 
 })
 
-// router.get('/price', function(req, res) {
-//   console.log(req.query)
-//   getTrip(req.query.origin, req.query.dest, function(err, trip) {
-//     if (err) throw err
-//     res.send(trip)
-//   })
-// })
+router.get('/autocomplete', function(req, res) {
+  rome2rio.autocomplete(req.query.term, function(err, suggestions) {
+    if (err) console.error(err)
+
+    var list = []
+    suggestions.places.forEach(function(place) {
+      list.push(place.longName)
+    })
+
+    res.send(list)
+  })
+})
 
 module.exports = router

@@ -1,3 +1,9 @@
+$('#origin-input').autocomplete({
+  source: '/autocomplete'
+, minLength: 3
+, autoFocus: true
+})
+
 $('#origin-form').on('submit', function(e){
 	e.preventDefault()
 	$.ajax({
