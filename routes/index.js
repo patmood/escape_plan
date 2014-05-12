@@ -3,14 +3,7 @@ var router = express.Router()
   , airports = require('../airports')
   , distance = require('../lib/distance')
   , rome2rio = require('../lib/rome2rio')
-  , apiKey
-
-// Env variables not working locally for me in fish shell
-if (app.get('env') === 'development') {
-  apiKey = require('../keys').rome2rio
-} else {
-  apiKey = process.env.ROME2RIO
-}
+  , apiKey = process.env.ROME2RIO // require('../keys').rome2rio
 
 /* GET home page. */
 router.get('/', function(req, res) {
