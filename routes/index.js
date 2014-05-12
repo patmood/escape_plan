@@ -17,7 +17,6 @@ router.get('/origin', function(req, res) {
   // Get the starting place
   rome2rio.autocomplete(origin, function(err, suggestions){
     if (err) return res.send('This error occured:' + err)
-    console.log(suggestions)
 
     // No starting place found? Booooo
     if (suggestions.places.length == 0) {
@@ -35,15 +34,15 @@ router.get('/origin', function(req, res) {
       if (err) throw err
       if (trip.routes.length > 0) {
         console.log('SENDING furthest location')
-        res.send(trip)
+        res.send(trip.routes)
       } else {
         // If no routes found, look for routes to furthest airport
-        distance.furthestAirport(airports, origin, function(furthest) {
+        distance.furthestAirport(airports, startPlace, function(furthest) {
           destPos = furthest.lat.toString() + ',' + furthest.lon.toString()
-          rome2rio.routes(origin, destPos, function(err, trip) {
+          rome2rio.routes(startPlace.canonicalName, destPos, function(err, trip) {
             if (err) throw err
             console.log('SENDING furthest airport')
-            res.send(trip)
+            res.send(trip.routes)
           })
 
         })
