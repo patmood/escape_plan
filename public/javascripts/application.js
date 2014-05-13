@@ -6,6 +6,7 @@ $('#origin-input').autocomplete({
 
 $('#origin-form').on('submit', function(e){
 	e.preventDefault()
+  reset()
 	$.ajax({
     dataType: 'json'
   , url: '/origin'
@@ -15,10 +16,13 @@ $('#origin-form').on('submit', function(e){
   , success: function(data) {
       console.log('success')
       console.log(data)
-      $('.trip-planning').append(
-        '<pre>' + JSON.stringify(data, undefined, 2) + '</pre>'
-      )
-      // initPrices(data)
+      // $('.raw-data').append(
+      //   '<pre>' + JSON.stringify(data, undefined, 2) + '</pre>'
+      // )
+      data[0].segments.forEach(function(segment) {
+        console.log('SEGEMENT:', segment)
+        addSegment(segment)
+      })
     }
   , error: function(err) {
       console.error(err)
@@ -26,19 +30,26 @@ $('#origin-form').on('submit', function(e){
 	})
 })
 
-function initPrices(data) {
-  $.ajax({
-    dataType: 'json'
-  , url: '/price'
-  , data: {
-      origin: data.summary.closest[0]
-    , dest: data.summary.furthest[0]
-    }
-  , success: function(trips) {
-      console.log(trips)
-    }
-  , error: function(err) {
-      console.error(err)
-    }
-  })
+function addSegment(details) {
+  if (details.kind === 'flight') {
+    var title = '<h2>' + capitalize(details.kind) + ' from ' + details.sCode + ' to ' + details.tCode + '</h2>'
+  } else {
+    var title = '<h2>' + capitalize(details.kind) + ' from ' + details.sName + ' to ' + details.tName + '</h2>'
+  }
+  $('.itinerary').append(
+    title
+    + '<p>Price: ' + details.indicativePrice.price
+    + '<br>Distance: ' + details.distance + 'kms'
+    + '<br>Duration: ' + details.duration + ' minutes'
+    + '</p>'
+  )
+}
+
+function reset() {
+  $('.itinerary').empty()
+  $('.raw-data').empty()
+}
+
+function capitalize(word) {
+  return word[0].toUpperCase() + word.slice(1)
 }

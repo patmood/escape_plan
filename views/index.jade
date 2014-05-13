@@ -1,13 +1,16 @@
 extends layout
 
 block content
-  .origin-form
-    h1= title
-    p Welcome to #{title}
+  .container
+    .origin-form
+      h1= title
+      p Welcome to #{title}
 
-    p Enter your nearest airport:
+      p Enter your nearest airport:
 
-    form(method="post", action="", id="origin-form")
-      input(type="text", name="origin" id="origin-input")
-      button(type="submit") Let's go!
-  .trip-planning
+      form(method="post", action="", id="origin-form")
+        input(type="text", name="origin" id="origin-input")
+        button(type="submit") Let's go!
+    .itinerary
+    .raw-data
+
