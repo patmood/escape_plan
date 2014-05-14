@@ -1,8 +1,62 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+   font-weight: 300;
 }
-
+h1, h2, h3 {
+  line-height: 1.1em;
+  letter-spacing: normal;
+  color: #222;
+}
+h1 { font-weight: 900; }
+h2 {
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+h3 {
+  letter-spacing: -0.02em;
+  font-weight: 500;
+}
+p {
+  line-height: 1.5em;
+  margin-bottom: 0px;
+  font-size: 16px;
+  color: #444;
+}
 a {
-  color: #00B7FF;
+  color: #428bca;
+  text-decoration: none;
+}
+a:hover, a:focus {
+  color: #005580;
+  text-decoration: underline;
+}
+.origin-form {
+  text-align: center;
+}
+#origin-input {
+  border-radius: 5px;
+  border: solid 2px #888;
+  text-align: center;
+  width: 90%;
+  max-width: 500px;
+  font-size: 24px;
+  margin: 10px auto;
+  padding: 10px 5px;
+  display: block;
+}
+.intro {
+  text-align: center;
+}
+.container {
+  padding: 10px;
+}
+.trip-leg {
+  border: solid #222 1px;
+  background-color: #f8f8f8;
+  border-radius: 5px;
+  margin: 20px auto;
+  padding: 10px 20px;
+  max-width: 800px;
+  width: 90%;
+
 }

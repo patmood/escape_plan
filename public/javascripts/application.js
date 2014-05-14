@@ -1,3 +1,5 @@
+var tripData
+
 $('#origin-input').autocomplete({
   source: '/autocomplete'
 , minLength: 3
@@ -14,7 +16,14 @@ $('#origin-form').on('submit', function(e){
       origin: $('#origin-form input').val()
     }
   , success: function(data) {
-      data[0].segments.forEach(addSegment)
+      tripData = data[0]
+      _.last(tripData.stops, function(lastStop) {
+        addSegment({
+          kind: 'intro'
+        , destination: lastStop.name
+        })
+      })
+      tripData.segments.forEach(addSegment)
     }
   , error: function(err) {
       console.error(err)
