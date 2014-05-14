@@ -1,12 +1,21 @@
 extends layout
 
 block content
-  .origin-form
+  .welcome
     h1= title
     h2 A travel site for adventurous day-dreamers
 
-    form(method="post", action="", id="origin-form")
-      input(type="text", name="origin" id="origin-input" placeholder="Where are you now?")
+    .form-wrap
+      form(method="post", action="", id="origin-form")
+        input(type="text", name="origin" id="origin-input" placeholder="Where are you now?")
+        input(type="submit" value="GO" id="origin-submit")
+
+  .spinner
+    .rect1
+    .rect2
+    .rect3
+    .rect4
+
   .container
     .itinerary
 

@@ -15,7 +15,14 @@ $('#origin-form').on('submit', function(e){
   , data: {
       origin: $('#origin-form input').val()
     }
+  , beforeSend: function() {
+      $('#origin-submit').prop('disabled', true)
+      $('.spinner').show()
+    }
   , success: function(data) {
+      $('#origin-submit').prop('disabled', false)
+      $('.spinner').hide()
+
       tripData = data[0]
       console.log('Trip Data:', tripData)
       _.last(tripData.stops, function(lastStop) {
@@ -27,6 +34,8 @@ $('#origin-form').on('submit', function(e){
       tripData.segments.forEach(addSegment)
     }
   , error: function(err) {
+      $('#origin-submit').prop('disabled', false)
+      $('.spinner').hide()
       console.error(err)
     }
 	})
