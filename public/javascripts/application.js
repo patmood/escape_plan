@@ -22,16 +22,20 @@ $('#origin-form').on('submit', function(e){
   , success: function(data) {
       $('#origin-submit').prop('disabled', false)
       $('.spinner').hide()
-
+      console.log('Data:', data)
       tripData = data[0]
-      console.log('Trip Data:', tripData)
-      _.last(tripData.stops, function(lastStop) {
-        addSegment({
-          kind: 'intro'
-        , destination: lastStop.name
+
+      if (data.length > 0) {
+        _.last(tripData.stops, function(lastStop) {
+          addSegment({
+            kind: 'intro'
+          , destination: lastStop.name
+          })
         })
-      })
-      tripData.segments.forEach(addSegment)
+        tripData.segments.forEach(addSegment)
+      } else {
+        addSegment({kind: 'error'})
+      }
     }
   , error: function(err) {
       $('#origin-submit').prop('disabled', false)
