@@ -14,3 +14,34 @@ block content
     .itinerary
     .raw-data
 
+  script(type="text/template" id="tpl-flight").
+    <h2>Flight from <%= sCode %> to <%= tCode %></h2>
+    <p>
+      Price: $<%= indicativePrice.price %><br>
+      Distance: <%= distance %> kms<br>
+      Duration: <%= duration %> minutes
+    </p>
+
+  script(type="text/template" id="tpl-train").
+    <h2>Train from <%= sName %> to <%= tName %></h2>
+    <p>
+      Price: $<%= indicativePrice.price %><br>
+      Distance: <%= distance %> kms<br>
+      Duration: <%= duration %> minutes
+    </p>
+
+  script(type="text/template" id="tpl-bus").
+    <h2>bus</h2>
+    <p>To be completed...</p>
+
+  script(type="text/template" id="tpl-ferry").
+    <h2>ferry</h2>
+    <p>To be completed...</p>
+
+  script(type="text/template" id="tpl-walk").
+    <h2>walk</h2>
+    <p>To be completed...</p>
+
+  script(type="text/template" id="tpl-car").
+    <h2>car</h2>
+    <p>To be completed...</p>
