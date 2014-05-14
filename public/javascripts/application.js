@@ -17,6 +17,7 @@ $('#origin-form').on('submit', function(e){
     }
   , success: function(data) {
       tripData = data[0]
+      console.log('Trip Data:', tripData)
       _.last(tripData.stops, function(lastStop) {
         addSegment({
           kind: 'intro'

@@ -53,10 +53,11 @@ router.get('/origin', function(req, res) {
 })
 
 router.get('/autocomplete', function(req, res) {
-  rome2rio.autocomplete(req.query.term, function(err, suggestions) {
+  var term = encodeURIComponent(req.query.term)
+  rome2rio.autocomplete(term, function(err, suggestions) {
+    var list = []
     if (err) console.error(err)
 
-    var list = []
     suggestions.places.forEach(function(place) {
       list.push(place.longName)
     })
