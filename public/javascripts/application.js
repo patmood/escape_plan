@@ -4,6 +4,9 @@ $('#origin-input').autocomplete({
   source: '/autocomplete'
 , minLength: 3
 , autoFocus: true
+, select: function() {
+    $('#origin-form').submit()
+  }
 })
 
 $('#origin-form').on('submit', function(e){
@@ -30,6 +33,8 @@ $('#origin-form').on('submit', function(e){
           addSegment({
             kind: 'intro'
           , destination: lastStop.name
+          , distance: tripData.distance.toFixed(1)
+          , duration: (tripData.duration / 60.0).toFixed(1)
           })
         })
         tripData.segments.forEach(addSegment)
