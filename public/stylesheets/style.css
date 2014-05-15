@@ -1,25 +1,24 @@
-@import url(http://fonts.googleapis.com/css?family=Francois+One);
-
 body {
    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
    font-weight: 300;
    margin: 0;
 }
 h1, h2, h3 {
-  font-family: 'Francois One', sans-serif;
   line-height: 1.1em;
-  letter-spacing: normal;
-  color: #222;
+  letter-spacing: -0.03em;
+  color: #333;
 }
 h1 {
   font-size: 102px;
   font-weight: 900;
 }
 h2 {
+  font-size: 42px;
   letter-spacing: -0.02em;
   font-weight: 700;
 }
 h3 {
+  font-size: 24px;
   letter-spacing: -0.02em;
   font-weight: 500;
 }
@@ -86,9 +85,6 @@ a:hover, a:focus {
   padding: 10px 20px;
   max-width: 800px;
   width: 90%;
-}
-.trip-leg h2 {
-  color: #314458;
 }
 
 /* Spinner */
