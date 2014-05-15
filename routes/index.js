@@ -23,25 +23,35 @@ router.get('/origin', function(req, res) {
     }
 
     var startPlace = suggestions.places[0]
+      , origin = startPlace.canonicalName
       , destLat = startPlace.lat * -1
       , destLon = startPlace.lng * -1
-      , destPos = destLat.toString() + ',' + destLon.toString()
-      // , destPos = '-49.037868,-7.031250' // Middle of ocean
+      , destination = destLat.toString() + ',' + destLon.toString()
+      // , destination = '-49.037868,-7.031250' // Middle of ocean
 
     // Find routes for furthest location
-    rome2rio.routes(startPlace.canonicalName, destPos, function(err, trip){
+    rome2rio.routes(origin, destination, 'Pos', function(err, trip){
       if (err) throw err
       if (trip.routes.length > 0) {
-        console.log('SENDING furthest location')
+        console.log('Found furthest LOCATION')
         res.send(trip.routes)
       } else {
         // If no routes found, look for routes to furthest airport
         distance.furthestAirport(airports, startPlace, function(furthest) {
-          destPos = furthest.lat.toString() + ',' + furthest.lon.toString()
-          rome2rio.routes(startPlace.canonicalName, destPos, function(err, trip) {
+          destination = furthest.lat.toString() + ',' + furthest.lon.toString()
+          rome2rio.routes(origin, destination, 'Pos', function(err, trip) {
             if (err) throw err
-            console.log('SENDING furthest airport')
-            res.send(trip.routes)
+            if (trip.routes.length > 0) {
+              console.log('Found furthest AIRPORT', destination)
+              res.send(trip.routes)
+            } else {
+              destination = encodeURIComponent(furthest.country)
+              rome2rio.routes(origin, destination, 'Name', function(err, trip) {
+                if (err) throw err
+                console.log('Found furthest COUNTRY', furthest.country)
+                res.send(trip.routes)
+              })
+            }
           })
 
         })
