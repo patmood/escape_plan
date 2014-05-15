@@ -34,9 +34,9 @@ block content
     <div class="trip-leg">
       <h2>Flight from <%= sCode %> to <%= tCode %></h2>
       <p>
-        Price: $<%= indicativePrice.price %><br>
-        Distance: <%= distance %> kms<br>
-        Duration: <%= duration %> minutes
+        Distance: <%= distance.toFixed(1) %> kms<br>
+        Duration: <%= duration %> minutes<br>
+        Price: $<%= indicativePrice.price %>
       </p>
     </div>
 
@@ -44,32 +44,44 @@ block content
     <div class="trip-leg">
       <h2>Train from <%= sName %> to <%= tName %></h2>
       <p>
-        Price: $<%= indicativePrice.price %><br>
-        Distance: <%= distance %> kms<br>
-        Duration: <%= duration %> minutes
+        Distance: <%= distance.toFixed(1) %> kms<br>
+        Duration: <%= duration %> minutes<br>
+        Price: $<%= indicativePrice.price %>
       </p>
     </div>
 
   script(type="text/template" id="tpl-bus").
     <div class="trip-leg">
-      <h2>bus</h2>
-      <p>To be completed...</p>
+      <h2>Bus from <%= sName %> to <%= tName %></h2>
+      <p>
+        Distance: <%= distance.toFixed(1) %> kms<br>
+        Duration: <%= duration %> minutes<br>
+      </p>
     </div>
 
   script(type="text/template" id="tpl-ferry").
     <div class="trip-leg">
-      <h2>ferry</h2>
-      <p>To be completed...</p>
+      <h2>Ferry from <%= sName %> to <%= tName %></h2>
+      <p>
+        Distance: <%= distance.toFixed(1) %> kms<br>
+        Duration: <%= duration %> minutes<br>
+      </p>
     </div>
 
   script(type="text/template" id="tpl-walk").
     <div class="trip-leg">
-      <h2>walk</h2>
-      <p>To be completed...</p>
+      <h2>Walk from <%= sName %> to <%= tName %></h2>
+      <p>
+        Distance: <%= distance.toFixed(1) %> kms<br>
+        Duration: <%= duration %> minutes<br>
+      </p>
     </div>
 
   script(type="text/template" id="tpl-car").
     <div class="trip-leg">
-      <h2>car</h2>
-      <p>To be completed...</p>
+      <h2>Car from <%= sName %> to <%= tName %></h2>
+      <p>
+        Distance: <%= distance.toFixed(1) %> kms<br>
+        Duration: <%= duration %> minutes<br>
+      </p>
     </div>
