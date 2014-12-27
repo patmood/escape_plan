@@ -28,19 +28,24 @@ $('#origin-form').on('submit', function(e){
       console.log('Data:', data)
       tripData = data[0]
 
-      if (data.length > 0) {
-        _.last(tripData.stops, function(lastStop) {
-          addSegment({
-            kind: 'intro'
-          , destination: lastStop.name
-          , distance: tripData.distance.toFixed(1)
-          , duration: (tripData.duration / 60.0).toFixed(1)
-          })
-        })
-        tripData.segments.forEach(addSegment)
-      } else {
-        addSegment({kind: 'error'})
+      if (!data.length > 0) return addSegment({kind: 'error'});
+        var numStops = tripData.stops.length
+          , lastStop = tripData.stops[numStops - 1]
+
+      if (lastStop.name === "Destination") {
+        lastStop.name = lastStop.pos + " (near " + tripData.stops[numStops - 2].name + ")"
       }
+
+      // Add intro summary
+      addSegment({
+        kind: 'intro'
+      , destination: lastStop.name
+      , distance: tripData.distance.toFixed(1)
+      , duration: (tripData.duration / 60.0).toFixed(1)
+      })
+
+      // Add each stop
+      tripData.segments.forEach(addSegment)
     }
   , error: function(err) {
       $('#origin-submit').prop('disabled', false)
